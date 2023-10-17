@@ -4,7 +4,7 @@ A pure lightweight Windows Forms application to monitor network activity.
 
 Developed as a need to detect network interruptions during Zoom streaming of Agama Yoga classes.
 
-![bytes-per-second.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Wiki/bytes-per-second.png?raw=true)
+![bytes-per-second.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Documentation/bytes-per-second.png?raw=true)
 
 ## Requirements
 
@@ -16,11 +16,11 @@ Download and run `TinyBandwidthMonitor.exe`
 
 A tiny window will pop up in bottom right corner of the screen.
 
-![accumulated.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Wiki/accumulated.png?raw=true)
+![accumulated.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Documentation/accumulated.png?raw=true)
 
 To manage settings and open new windows right-click on the yellow-blue tray icon.
 
-![tray-icon.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Wiki/tray-icon.png?raw=true)
+![tray-icon.png](https://github.com/agamayoga/TinyBandwidthMonitor/blob/main/Documentation/tray-icon.png?raw=true)
 
 ## Development
 
