@@ -12,7 +12,7 @@ Microsoft Windows system with .NET 4.0
 
 ## Getting Started
 
-Download and run `TinyBandwidthMonitor.exe`
+[Download](https://github.com/agamayoga/TinyBandwidthMonitor/releases/download/v1.0.0/TinyBandwidthMonitor-v1.0.0-AnyCPU.zip) and run `TinyBandwidthMonitor.exe`
 
 A tiny window will pop up in bottom right corner of the screen.
 
