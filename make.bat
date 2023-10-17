@@ -29,19 +29,25 @@ if exist Release del /q Release\*.*
 
 if not "%KEYSIGN%"=="true" (
 	rem Build "unsigned" assemblies
-	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release
+	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x64 /p:PlatformTarget=x64 /p:OutputPath=..\Release\x64
 	if not "%ERRORLEVEL%"=="0" goto error-compile
 )
 
 if "%KEYSIGN%"=="true" (
 	rem Build "signed" strong name assmeblies
   if not exist %KEYFILE% goto error-missing-keyfile
-	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
+	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x64 /p:PlatformTarget=x64 /p:OutputPath=..\Release\x64 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
 	if not "%ERRORLEVEL%"=="0" goto error-compile
 )
 
-copy %PRJNAME%\bin\Release\*.dll Release > nul
-copy %PRJNAME%\bin\Release\*.exe Release > nul
+rem copy %PRJNAME%\bin\Release\*.dll Release > nul
+rem copy %PRJNAME%\bin\Release\*.exe Release > nul
+del Release\x86\*.pdb
+del Release\x86\*.config
+del Release\x64\*.pdb
+del Release\x64\*.config
 
 echo Done!
 goto end
