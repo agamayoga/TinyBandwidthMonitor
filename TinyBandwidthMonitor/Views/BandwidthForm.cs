@@ -183,7 +183,7 @@ namespace Agama
 
         protected NetworkInterface GetNetworkInterface()
         {
-            return this.NetworkInterface ?? interfaces.First(x => x.Name == "Local Area Connection") ?? interfaces.FirstOrDefault();
+            return this.NetworkInterface ?? interfaces.FirstOrDefault(x => x.Name == "Local Area Connection") ?? interfaces.FirstOrDefault();
         }
 
         private void BandwidthForm_Load(object sender, EventArgs e)

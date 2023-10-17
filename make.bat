@@ -28,22 +28,26 @@ if not exist Release mkdir Release
 if exist Release del /q Release\*.*
 
 if not "%KEYSIGN%"=="true" (
-	rem Build "unsigned" assemblies
-	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86
+  rem Build "unsigned" assemblies
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=..\Release\AnyCPU
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86
   %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x64 /p:PlatformTarget=x64 /p:OutputPath=..\Release\x64
-	if not "%ERRORLEVEL%"=="0" goto error-compile
+  if not "%ERRORLEVEL%"=="0" goto error-compile
 )
 
 if "%KEYSIGN%"=="true" (
-	rem Build "signed" strong name assmeblies
+  rem Build "signed" strong name assmeblies
   if not exist %KEYFILE% goto error-missing-keyfile
-	%MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=..\Release\AnyCPU /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
+  %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x86 /p:PlatformTarget=x86 /p:OutputPath=..\Release\x86 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
   %MSBUILD% %SLNFILE% /t:Build /p:Configuration=Release /p:Platform=x64 /p:PlatformTarget=x64 /p:OutputPath=..\Release\x64 /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=%KEYFILE% /p:DelaySign=false
-	if not "%ERRORLEVEL%"=="0" goto error-compile
+  if not "%ERRORLEVEL%"=="0" goto error-compile
 )
 
 rem copy %PRJNAME%\bin\Release\*.dll Release > nul
 rem copy %PRJNAME%\bin\Release\*.exe Release > nul
+del Release\AnyCPU\*.pdb
+del Release\AnyCPU\*.config
 del Release\x86\*.pdb
 del Release\x86\*.config
 del Release\x64\*.pdb
@@ -57,15 +61,15 @@ rem Check if "sn.exe" is a available
 sn >nul 2>&1
 if not "%ERRORLEVEL%" == "0" (
   echo Error: Requires Developer Command Prompt for Visual Studio
-	exit /b 1
+  exit /b 1
 )
 
 rem Check the second argument
 if not "%2"=="" (
-	echo %2
-	sn -T Release\%2 | findstr Public
-	echo.
-	goto end
+  echo %2
+  sn -T Release\%2 | findstr Public
+  echo.
+  goto end
 )
 
 rem Check each file
